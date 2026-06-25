@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "AI Chat Timestamp",
+  "version": "1.0",
+  "description": "AI 채팅 메시지 전송 시 자동으로 현재 시간을 삽입합니다.",
+  "permissions": ["activeTab", "scripting"],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://claude.ai/*",
+        "https://chatgpt.com/*",
+        "https://gemini.google.com/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
