@@ -64,9 +64,9 @@
           return target.closest('#composer-submit-button');
       case 'gemini': {
         if (target == null)
-          return document.querySelector('[data-test-id=send-button-container] .mat-focus-indicator');
+          return document.querySelector('[data-test-id=send-button-container]');
         else
-          return target.closest('[data-test-id=send-button-container] .mat-focus-indicator');
+          return target.closest('[data-test-id=send-button-container]');
       }
       case 'claude':
         if (target == null)
@@ -126,7 +126,7 @@
 
   function attachListener() {
     if (!document._click_attached) {
-      document.addEventListener('click', (e) => {
+      document.addEventListener('mousedown', (e) => {
         if (getSendButton(e) != null)
           insertTimestamp();
       }, true);

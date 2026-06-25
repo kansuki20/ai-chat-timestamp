@@ -15,7 +15,7 @@ chrome.storage.local.get('enabled', (data) => {
 toggle.addEventListener('click', (e) => {
   e.preventDefault();
 
-  const willEnable = !toggle.checked;
+  const willEnable = toggle.checked;
   confirmMsg.textContent = `타임스탬프를 ${willEnable ? 'ON' : 'OFF'} 하시겠습니까?`;
   confirmBox.style.display = 'block';
 });
