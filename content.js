@@ -1,4 +1,8 @@
-(() => {
+(async () => {
+  const { enabled } = await chrome.storage.local.get('enabled');
+  if (enabled === false)
+    return;
+
   // 현재 사용중인 ai 타입 가져오기
   function getAiType() {
     const href = location.href;
@@ -67,9 +71,11 @@
   }
 
 
-  function insertTimestamp() {
+  function insertTimestamp(e) {
     const editor = getEditor();
     if (!editor) return;
+    const sendBtn = getSendButton(e);
+    if (!sendBtn) return;
 
     const stamp = getKSTTimestamp();
     const timestampPattern = /^\[채팅시간:\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2}\]\n/;
@@ -77,15 +83,12 @@
     switch (aiType) {
       case 'chatgpt': case 'gemini': {
         // gemini, gpt 같은 방식임
-        const sendBtn = getSendButton();
-        if (!sendBtn)
-          return;
         // 첫 요소에 이미 시간 적혀있으면
         const firstP = editor.querySelector('p');
-        /*if (firstP && timestampPattern.test(firstP.textContent + '\n')) {
+        if (firstP && timestampPattern.test(firstP.textContent + '\n')) {
           firstP.textContent = stamp;
           return;
-        }*/
+        }
 
         const p = document.createElement('p');
         p.textContent = stamp;
@@ -93,19 +96,15 @@
         break;
       }
       case 'claude': {
-        const sendBtn = getSendButton();
-        if (!sendBtn) return;
-
         const currentText = editor.innerText.trim();
         if (!currentText) return;
 
-        const newText = stamp + "\n" + currentText;
         // 시간 적힌 것 중복 체크
-        /*let newText;
+        let newText;
         if (timestampPattern.test(currentText))
           newText = currentText.replace(timestampPattern, stamp + "\n");
         else
-          newText = stamp + "\n" + currentText;*/
+          newText = stamp + "\n" + currentText;
 
         editor.focus();
 
@@ -127,23 +126,12 @@
 
   function handleKeydown(e) {
     if (e.key === "Enter" && !e.shiftKey) {
-      const editor = getEditor();
-      if (!editor) return;
-      const text = editor.innerText.trim();
-      if (!text) return;
       insertTimestamp();
     }
   }
 
   function handleClick(e) {
-    const btn = getSendButton(e);
-    if (!btn) return;
-
-    const editor = getEditor();
-    if (!editor) return;
-    const text = editor.innerText.trim();
-    if (!text) return;
-    insertTimestamp();
+    insertTimestamp(e);
   }
 
   document.addEventListener("keydown", handleKeydown, true);
