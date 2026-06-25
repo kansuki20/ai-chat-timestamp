@@ -97,7 +97,6 @@
       }
       case 'claude': {
         const currentText = editor.innerText.trim();
-        if (!currentText) return;
 
         // 시간 적힌 것 중복 체크
         let newText;
@@ -130,10 +129,14 @@
     }
   }
 
-  function handleClick(e) {
-    insertTimestamp(e);
+  function handleMousedown(e) {
+    const isSendBtn = getSendButton(e);
+    if (!isSendBtn)
+      return;
+
+    insertTimestamp();
   }
 
   document.addEventListener("keydown", handleKeydown, true);
-  document.addEventListener("click", handleClick, true);
+  document.addEventListener("mousedown", handleMousedown, true);
 })();
