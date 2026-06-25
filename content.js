@@ -1,7 +1,14 @@
-(async () => {
-  const { enabled } = await chrome.storage.local.get('enabled');
-  if (enabled === false)
-    return;
+(() => {
+  let isEnabled = true; // 활성화
+
+  chrome.storage.local.get('enabled', (data) => {
+    isEnabled = data.enabled !== false;
+  });
+
+  chrome.storage.onChanged.addListener((changes) => {
+    if (changes.enabled !== undefined)
+      isEnabled = changes.enabled.newValue;
+  });
 
   // 현재 사용중인 ai 타입 가져오기
   function getAiType() {
@@ -18,6 +25,7 @@
   const aiType = getAiType();
   if (aiType === 'unknown')
     return;
+
 
   function getKSTTimestamp() {
     const now = new Date();
@@ -71,11 +79,16 @@
   }
 
 
-  function insertTimestamp(e) {
+  function insertTimestamp(
+    checkBtn = true
+  ) {
+    if (!isEnabled)
+      return;
+
     const editor = getEditor();
     if (!editor) return;
-    const sendBtn = getSendButton(e);
-    if (!sendBtn) return;
+    if (checkBtn && !getSendButton())
+      return;
 
     const stamp = getKSTTimestamp();
     const timestampPattern = /^\[채팅시간:\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2}\]\n/;
@@ -96,26 +109,14 @@
         break;
       }
       case 'claude': {
-        const currentText = editor.innerText.trim();
-
-        // 시간 적힌 것 중복 체크
-        let newText;
-        if (timestampPattern.test(currentText))
-          newText = currentText.replace(timestampPattern, stamp + "\n");
-        else
-          newText = stamp + "\n" + currentText;
-
-        editor.focus();
-
-        // 전체 선택 후 교체해야 기존 텍스트 안 겹침
-        const selection = window.getSelection();
-        const range = document.createRange();
-        range.selectNodeContents(editor);
-        selection.removeAllRanges();
-        selection.addRange(range);
-
-        document.execCommand("insertText", false, newText);
-
+        const firstNode = editor.childNodes[0];
+        if (timestampPattern.test(firstNode.textContent.trim())) {
+          firstNode.textContent = stamp;
+          return;
+        }
+        const p = document.createElement('p');
+        p.textContent = stamp;
+        editor.insertBefore(p, editor.firstChild);
         break;
       }
       default:
@@ -123,20 +124,26 @@
     }
   }
 
-  function handleKeydown(e) {
-    if (e.key === "Enter" && !e.shiftKey) {
-      insertTimestamp();
+  function attachListener() {
+    if (!document._click_attached) {
+      document.addEventListener('click', (e) => {
+        if (getSendButton(e) != null)
+          insertTimestamp();
+      }, true);
+      document._click_attached = true;
+    }
+
+    if (!document._key_attached) {
+      document.addEventListener('keydown', (e) => {
+        if (e.key === "Enter" && !e.shiftKey)
+          insertTimestamp(false);
+      }, true);
+      document._key_attached = true;
     }
   }
 
-  function handleMousedown(e) {
-    const isSendBtn = getSendButton(e);
-    if (!isSendBtn)
-      return;
+  const observer = new MutationObserver(() => attachListener());
+  observer.observe(document.body, { childList: true, subtree: true });
 
-    insertTimestamp();
-  }
-
-  document.addEventListener("keydown", handleKeydown, true);
-  document.addEventListener("mousedown", handleMousedown, true);
+  attachListener();
 })();

@@ -16,7 +16,7 @@ toggle.addEventListener('click', (e) => {
   e.preventDefault();
 
   const willEnable = !toggle.checked;
-  confirmMsg.textContent = `타임스탬프를 ${willEnable ? 'ON' : 'OFF'} 하시겠습니까? 현재 탭이 새로고침됩니다.`;
+  confirmMsg.textContent = `타임스탬프를 ${willEnable ? 'ON' : 'OFF'} 하시겠습니까?`;
   confirmBox.style.display = 'block';
 });
 
@@ -26,11 +26,7 @@ confirmOk.addEventListener('click', () => {
   confirmBox.style.display = 'none';
   status.textContent = enabled ? 'ON' : 'OFF';
 
-  chrome.storage.local.set({ enabled }, () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      chrome.tabs.reload(tabs[0].id);
-    });
-  });
+  chrome.storage.local.set({ enabled });
 });
 
 
