@@ -25,16 +25,15 @@
   const aiType = getAiType();
   if (aiType === 'unknown') return;
 
-  function getKSTTimestamp() {
-    const now = new Date();
-    const kst = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Seoul" }));
+  function getTimestamp() {
+    const d = new Date();
     return currentFormat
-      .replace('YYYY', String(kst.getFullYear()))
-      .replace('MM', String(kst.getMonth() + 1).padStart(2, '0'))
-      .replace('DD', String(kst.getDate()).padStart(2, '0'))
-      .replace('HH', String(kst.getHours()).padStart(2, '0'))
-      .replace('mm', String(kst.getMinutes()).padStart(2, '0'))
-      .replace('ss', String(kst.getSeconds()).padStart(2, '0'));
+      .replace('YYYY', String(d.getFullYear()))
+      .replace('MM', String(d.getMonth() + 1).padStart(2, '0'))
+      .replace('DD', String(d.getDate()).padStart(2, '0'))
+      .replace('HH', String(d.getHours()).padStart(2, '0'))
+      .replace('mm', String(d.getMinutes()).padStart(2, '0'))
+      .replace('ss', String(d.getSeconds()).padStart(2, '0'));
   }
 
   function getEditor() {
@@ -86,7 +85,7 @@
     if (!editor) return;
     if (checkBtn && !getSendButton()) return;
 
-    const stamp = getKSTTimestamp();
+    const stamp = getTimestamp();
     const timestampPattern = buildTimestampPattern();
 
     switch (aiType) {
