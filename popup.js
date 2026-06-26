@@ -2,10 +2,6 @@ const i18n = chrome.i18n.getMessage.bind(chrome.i18n);
 
 const toggle = document.querySelector('#toggle');
 const status = document.querySelector('#status');
-const confirmBox = document.querySelector('#confirm-box');
-const confirmMsg = document.querySelector('#confirm-msg');
-const confirmOk = document.querySelector('#confirm-ok');
-const confirmCancel = document.querySelector('#confirm-cancel');
 const formatInput = document.querySelector('#format-input');
 const formatSave = document.querySelector('#format-save');
 const formatReset = document.querySelector('#format-reset');
@@ -17,8 +13,6 @@ document.querySelector('#format-hint').textContent = i18n('format_hint');
 formatInput.placeholder = i18n('format_placeholder');
 formatSave.textContent = i18n('format_save');
 formatReset.textContent = i18n('format_reset');
-confirmOk.textContent = i18n('confirm_ok');
-confirmCancel.textContent = i18n('confirm_cancel');
 
 const DEFAULT_FORMAT = i18n('format_placeholder');
 const TOKENS = ['YYYY', 'MM', 'DD', 'HH', 'mm', 'ss'];
@@ -83,21 +77,8 @@ formatReset.addEventListener('click', () => {
 });
 
 // 토글
-toggle.addEventListener('click', (e) => {
-  e.preventDefault();
-  const willEnable = !toggle.checked;
-  confirmMsg.textContent = willEnable ? i18n('confirm_on') : i18n('confirm_off');
-  confirmBox.style.display = 'block';
-});
-
-confirmOk.addEventListener('click', () => {
-  toggle.checked = !toggle.checked;
+toggle.addEventListener('change', () => {
   const enabled = toggle.checked;
-  confirmBox.style.display = 'none';
   status.textContent = enabled ? i18n('status_on') : i18n('status_off');
   chrome.storage.local.set({ enabled });
-});
-
-confirmCancel.addEventListener('click', () => {
-  confirmBox.style.display = 'none';
 });
