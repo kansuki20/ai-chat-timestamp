@@ -43,7 +43,7 @@
   function getEditor() {
     switch (aiType) {
       case 'chatgpt':
-        return document.querySelector('#prompt-textarea'); // TODO
+        return document.querySelector('#prompt-textarea');
       case 'gemini':
         return document.querySelector('.ql-editor');
       case 'claude':
