@@ -1,6 +1,6 @@
 (() => {
   let isEnabled = true;
-  let currentFormat = '[채팅시간:YYYY/MM/DD HH:mm:ss]';
+  let currentFormat = chrome.i18n.getMessage('format_placeholder');
 
   chrome.storage.local.get(['enabled', 'format'], (data) => {
     isEnabled = data.enabled !== false;
