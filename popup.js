@@ -5,9 +5,6 @@ const confirmMsg = document.querySelector('#confirm-msg');
 const confirmOk = document.querySelector('#confirm-ok');
 const confirmCancel = document.querySelector('#confirm-cancel');
 
-
-let pendingState = true;
-
 // 현재 상태 로드
 chrome.storage.local.get('enabled', (data) => {
   const enabled = data.enabled !== false;
@@ -18,16 +15,18 @@ chrome.storage.local.get('enabled', (data) => {
 toggle.addEventListener('click', (e) => {
   e.preventDefault();
 
-  pendingState = !toggle.checked;
-  confirmMsg.textContent = `타임스탬프를 ${pendingState ? 'ON' : 'OFF'} 하시겠습니까?`;
+  const willEnable = toggle.checked;
+  confirmMsg.textContent = `타임스탬프를 ${willEnable ? 'ON' : 'OFF'} 하시겠습니까?`;
   confirmBox.style.display = 'block';
 });
 
 confirmOk.addEventListener('click', () => {
-  toggle.checked = pendingState;
-  status.textContent = pendingState ? 'ON' : 'OFF';
-  chrome.storage.local.set({ enabled: pendingState });
+  toggle.checked = !toggle.checked; // 여기서 실제로 변경
+  const enabled = toggle.checked;
   confirmBox.style.display = 'none';
+  status.textContent = enabled ? 'ON' : 'OFF';
+
+  chrome.storage.local.set({ enabled });
 });
 
 
