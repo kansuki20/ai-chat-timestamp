@@ -1,0 +1,20 @@
+{
+  "ext_name": { "message": "AI Chat Timestamp" },
+  "ext_description": { "message": "AIチャットのメッセージ送信時に現在時刻を自動で挿入します。" },
+  "status_on": { "message": "ON" },
+  "status_off": { "message": "OFF" },
+  "format_label": { "message": "タイムスタンプ形式" },
+  "format_placeholder": { "message": "[送信時刻:YYYY/MM/DD HH:mm:ss]" },
+  "format_hint": { "message": "YYYY 年 · MM 月 · DD 日\nHH 時 · mm 分 · ss 秒" },
+  "format_preview": { "message": "プレビュー: " },
+  "format_save": { "message": "保存" },
+  "format_saved": { "message": "保存済み!" },
+  "format_reset": { "message": "リセット" },
+  "format_reset_done": { "message": "完了" },
+  "format_error_no_token": { "message": "⚠ YYYY MM DD HH mm ss のいずれかが必要です" },
+  "format_error_save": { "message": "⚠ 保存不可: 日付/時刻の形式がありません" },
+  "confirm_on": { "message": "タイムスタンプを有効にしますか？" },
+  "confirm_off": { "message": "タイムスタンプを無効にしますか？" },
+  "confirm_ok": { "message": "OK" },
+  "confirm_cancel": { "message": "キャンセル" }
+}

@@ -21,9 +21,7 @@
       align-items: center;
       justify-content: space-between;
     }
-    .label {
-      font-size: 13px;
-    }
+    .label { font-size: 13px; }
     .switch {
       position: relative;
       width: 40px;
@@ -51,13 +49,11 @@
     }
     input:checked + .slider { background: #4caf50; }
     input:checked + .slider::before { transform: translateX(18px); }
-
     .divider {
       border: none;
       border-top: 1px solid #333;
       margin: 12px 0;
     }
-
     .format-section label {
       display: block;
       font-size: 11px;
@@ -75,14 +71,19 @@
       padding: 5px 7px;
       outline: none;
     }
-    .format-section input[type="text"]:focus {
-      border-color: #4caf50;
-    }
+    .format-section input[type="text"]:focus { border-color: #4caf50; }
     .hint {
       font-size: 10px;
       color: #666;
       margin-top: 5px;
       line-height: 1.5;
+      white-space: pre-line;
+    }
+    #preview {
+      font-size: 10px;
+      color: #4caf50;
+      margin-top: 6px;
+      word-break: break-all;
     }
     .format-btn-row {
       display: flex;
@@ -100,13 +101,6 @@
     }
     #format-save { background: #4caf50; color: white; }
     #format-reset { background: #555; color: white; }
-    #preview {
-      font-size: 10px;
-      color: #4caf50;
-      margin-top: 6px;
-      word-break: break-all;
-    }
-
     #confirm-box {
       display: none;
       margin-top: 12px;
@@ -119,10 +113,7 @@
       margin: 0 0 10px 0;
       line-height: 1.4;
     }
-    .btn-row {
-      display: flex;
-      gap: 8px;
-    }
+    .btn-row { display: flex; gap: 8px; }
     .btn-row button {
       flex: 1;
       padding: 5px 0;
@@ -140,7 +131,7 @@
 <h3>AI Chat Timestamp</h3>
 
 <div class="toggle-row">
-  <span class="label" id="status">OFF</span>
+  <span class="label" id="status"></span>
   <label class="switch">
     <input type="checkbox" id="toggle">
     <span class="slider"></span>
@@ -150,24 +141,21 @@
 <hr class="divider">
 
 <div class="format-section">
-  <label>타임스탬프 포맷</label>
-  <input type="text" id="format-input" placeholder="[채팅시간:YYYY/MM/DD HH:mm:ss]">
-  <div class="hint">
-    YYYY 년 · MM 월 · DD 일<br>
-    HH 시 · mm 분 · ss 초
-  </div>
+  <label id="format-label"></label>
+  <input type="text" id="format-input">
+  <div class="hint" id="format-hint"></div>
   <div id="preview"></div>
   <div class="format-btn-row">
-    <button id="format-save">저장</button>
-    <button id="format-reset">초기화</button>
+    <button id="format-save"></button>
+    <button id="format-reset"></button>
   </div>
 </div>
 
 <div id="confirm-box">
   <p id="confirm-msg"></p>
   <div class="btn-row">
-    <button id="confirm-ok">확인</button>
-    <button id="confirm-cancel">취소</button>
+    <button id="confirm-ok"></button>
+    <button id="confirm-cancel"></button>
   </div>
 </div>
 

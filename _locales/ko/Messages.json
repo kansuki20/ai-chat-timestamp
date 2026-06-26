@@ -1,0 +1,20 @@
+{
+  "ext_name": { "message": "AI Chat Timestamp" },
+  "ext_description": { "message": "AI 채팅 메시지 전송 시 자동으로 현재 시간을 삽입합니다." },
+  "status_on": { "message": "ON" },
+  "status_off": { "message": "OFF" },
+  "format_label": { "message": "타임스탬프 포맷" },
+  "format_placeholder": { "message": "[채팅시간:YYYY/MM/DD HH:mm:ss]" },
+  "format_hint": { "message": "YYYY 년 · MM 월 · DD 일\nHH 시 · mm 분 · ss 초" },
+  "format_preview": { "message": "미리보기: " },
+  "format_save": { "message": "저장" },
+  "format_saved": { "message": "저장됨!" },
+  "format_reset": { "message": "초기화" },
+  "format_reset_done": { "message": "완료" },
+  "format_error_no_token": { "message": "⚠ YYYY MM DD HH mm ss 중 하나는 있어야 합니다" },
+  "format_error_save": { "message": "⚠ 저장 불가: 날짜/시간 형식이 없습니다" },
+  "confirm_on": { "message": "타임스탬프를 ON 하시겠습니까?" },
+  "confirm_off": { "message": "타임스탬프를 OFF 하시겠습니까?" },
+  "confirm_ok": { "message": "확인" },
+  "confirm_cancel": { "message": "취소" }
+}

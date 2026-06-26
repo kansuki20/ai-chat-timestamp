@@ -1,0 +1,20 @@
+{
+  "ext_name": { "message": "AI Chat Timestamp" },
+  "ext_description": { "message": "在发送AI聊天消息时自动插入当前时间。" },
+  "status_on": { "message": "ON" },
+  "status_off": { "message": "OFF" },
+  "format_label": { "message": "时间戳格式" },
+  "format_placeholder": { "message": "[发送时间:YYYY/MM/DD HH:mm:ss]" },
+  "format_hint": { "message": "YYYY 年 · MM 月 · DD 日\nHH 时 · mm 分 · ss 秒" },
+  "format_preview": { "message": "预览: " },
+  "format_save": { "message": "保存" },
+  "format_saved": { "message": "已保存!" },
+  "format_reset": { "message": "重置" },
+  "format_reset_done": { "message": "完成" },
+  "format_error_no_token": { "message": "⚠ 必须包含 YYYY MM DD HH mm ss 中的至少一个" },
+  "format_error_save": { "message": "⚠ 无法保存: 未找到日期/时间格式" },
+  "confirm_on": { "message": "是否启用时间戳？" },
+  "confirm_off": { "message": "是否禁用时间戳？" },
+  "confirm_ok": { "message": "确认" },
+  "confirm_cancel": { "message": "取消" }
+}

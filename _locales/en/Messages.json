@@ -1,0 +1,20 @@
+{
+  "ext_name": { "message": "AI Chat Timestamp" },
+  "ext_description": { "message": "Automatically prepends the current time to AI chat messages before sending." },
+  "status_on": { "message": "ON" },
+  "status_off": { "message": "OFF" },
+  "format_label": { "message": "Timestamp Format" },
+  "format_placeholder": { "message": "[Time:YYYY/MM/DD HH:mm:ss]" },
+  "format_hint": { "message": "YYYY year · MM month · DD day\nHH hour · mm min · ss sec" },
+  "format_preview": { "message": "Preview: " },
+  "format_save": { "message": "Save" },
+  "format_saved": { "message": "Saved!" },
+  "format_reset": { "message": "Reset" },
+  "format_reset_done": { "message": "Done" },
+  "format_error_no_token": { "message": "⚠ Must include at least one of: YYYY MM DD HH mm ss" },
+  "format_error_save": { "message": "⚠ Cannot save: no date/time token found" },
+  "confirm_on": { "message": "Enable timestamp?" },
+  "confirm_off": { "message": "Disable timestamp?" },
+  "confirm_ok": { "message": "OK" },
+  "confirm_cancel": { "message": "Cancel" }
+}

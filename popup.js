@@ -1,3 +1,5 @@
+const i18n = chrome.i18n.getMessage.bind(chrome.i18n);
+
 const toggle = document.querySelector('#toggle');
 const status = document.querySelector('#status');
 const confirmBox = document.querySelector('#confirm-box');
@@ -9,7 +11,21 @@ const formatSave = document.querySelector('#format-save');
 const formatReset = document.querySelector('#format-reset');
 const preview = document.querySelector('#preview');
 
-const DEFAULT_FORMAT = '[채팅시간:YYYY/MM/DD HH:mm:ss]';
+// i18n 텍스트 세팅
+document.querySelector('#format-label').textContent = i18n('format_label');
+document.querySelector('#format-hint').textContent = i18n('format_hint');
+formatInput.placeholder = i18n('format_placeholder');
+formatSave.textContent = i18n('format_save');
+formatReset.textContent = i18n('format_reset');
+confirmOk.textContent = i18n('confirm_ok');
+confirmCancel.textContent = i18n('confirm_cancel');
+
+const DEFAULT_FORMAT = i18n('format_placeholder');
+const TOKENS = ['YYYY', 'MM', 'DD', 'HH', 'mm', 'ss'];
+
+function isValidFormat(fmt) {
+  return TOKENS.some(token => fmt.includes(token));
+}
 
 function applyFormat(fmt) {
   const now = new Date();
@@ -23,44 +39,37 @@ function applyFormat(fmt) {
     .replace('ss', String(kst.getSeconds()).padStart(2, '0'));
 }
 
-// 현재 상태 로드
-chrome.storage.local.get(['enabled', 'format'], (data) => {
-  const enabled = data.enabled !== false;
-  toggle.checked = enabled;
-  status.textContent = enabled ? 'ON' : 'OFF';
-
-  const fmt = data.format || '';
-  formatInput.value = fmt;
-  updatePreview();
-});
-
-const TOKENS = ['YYYY', 'MM', 'DD', 'HH', 'mm', 'ss'];
-
-function isValidFormat(fmt) {
-  return TOKENS.some(token => fmt.includes(token));
-}
-
 function updatePreview() {
   const fmt = formatInput.value.trim() || DEFAULT_FORMAT;
   const valid = isValidFormat(fmt);
   preview.textContent = valid
-    ? '미리보기: ' + applyFormat(fmt)
-    : '⚠ YYYY MM DD HH mm ss 중 하나는 있어야 합니다';
+    ? i18n('format_preview') + applyFormat(fmt)
+    : i18n('format_error_no_token');
   preview.style.color = valid ? '#4caf50' : '#e57373';
 }
+
+// 현재 상태 로드
+chrome.storage.local.get(['enabled', 'format'], (data) => {
+  const enabled = data.enabled !== false;
+  toggle.checked = enabled;
+  status.textContent = enabled ? i18n('status_on') : i18n('status_off');
+
+  formatInput.value = data.format || '';
+  updatePreview();
+});
 
 formatInput.addEventListener('input', updatePreview);
 
 formatSave.addEventListener('click', () => {
   const fmt = formatInput.value.trim();
   if (fmt && !isValidFormat(fmt)) {
-    preview.textContent = '⚠ 저장 불가: 토큰이 없습니다';
+    preview.textContent = i18n('format_error_save');
     preview.style.color = '#e57373';
     return;
   }
   chrome.storage.local.set({ format: fmt || DEFAULT_FORMAT }, () => {
-    formatSave.textContent = '저장됨!';
-    setTimeout(() => { formatSave.textContent = '저장'; }, 1000);
+    formatSave.textContent = i18n('format_saved');
+    setTimeout(() => { formatSave.textContent = i18n('format_save'); }, 1000);
   });
 });
 
@@ -68,17 +77,16 @@ formatReset.addEventListener('click', () => {
   formatInput.value = '';
   chrome.storage.local.set({ format: DEFAULT_FORMAT }, () => {
     updatePreview();
-    formatReset.textContent = '완료';
-    setTimeout(() => { formatReset.textContent = '초기화'; }, 1000);
+    formatReset.textContent = i18n('format_reset_done');
+    setTimeout(() => { formatReset.textContent = i18n('format_reset'); }, 1000);
   });
 });
 
 // 토글
 toggle.addEventListener('click', (e) => {
   e.preventDefault();
-
   const willEnable = !toggle.checked;
-  confirmMsg.textContent = `타임스탬프를 ${willEnable ? 'ON' : 'OFF'} 하시겠습니까?`;
+  confirmMsg.textContent = willEnable ? i18n('confirm_on') : i18n('confirm_off');
   confirmBox.style.display = 'block';
 });
 
@@ -86,7 +94,7 @@ confirmOk.addEventListener('click', () => {
   toggle.checked = !toggle.checked;
   const enabled = toggle.checked;
   confirmBox.style.display = 'none';
-  status.textContent = enabled ? 'ON' : 'OFF';
+  status.textContent = enabled ? i18n('status_on') : i18n('status_off');
   chrome.storage.local.set({ enabled });
 });
 
